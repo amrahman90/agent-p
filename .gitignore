@@ -31,7 +31,6 @@ Thumbs.db
 .opencode/.gitignore
 
 # Internal Documentation (private)
-docs/
 PLAN.md
 BUILD.md
 KNOWLEDGE.md
