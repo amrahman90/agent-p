@@ -1,0 +1,96 @@
+{
+  "name": "agent-p",
+  "version": "0.0.1",
+  "description": "Multi-Agent Orchestration & Context Engineering toolkit with a custom Agentic workflow for AI related tasks",
+  "type": "module",
+  "main": "dist/src/index.js",
+  "bin": {
+    "agent-p": "./bin/cli.js"
+  },
+  "scripts": {
+    "build": "pnpm run build:check && pnpm run build:compile && pnpm run build:assets",
+    "build:check": "pnpm run lint && pnpm run docs:check",
+    "build:compile": "tsc",
+    "build:assets": "tsx bin/copy-skills-manifest.ts",
+    "docs:check": "tsx bin/docs-verify.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest --coverage",
+    "test:e2e": "vitest run --config vitest.e2e.config.ts",
+    "test:contracts": "vitest run test/unit/cli.test.ts test/unit/cli-hooks.test.ts",
+    "verify:phase9": "pnpm typecheck && pnpm lint && pnpm test && pnpm test:contracts && pnpm test:e2e && pnpm test:coverage && pnpm build && pnpm docs:check",
+    "lint": "eslint src/ test/",
+    "typecheck": "tsc --noEmit",
+    "db:migrate": "tsx src/db/migrate.ts",
+    "db:generate": "drizzle-kit generate",
+    "preinstall": "npx only-allow pnpm",
+    "postinstall": "pnpm build:sqlite",
+    "build:sqlite": "tsx bin/build-sqlite.ts"
+  },
+  "dependencies": {
+    "@libsql/client": "^0.15.0",
+    "better-sqlite3": "^12.6.2",
+    "chalk": "^5.6.2",
+    "commander": "^14.0.3",
+    "debug": "^4.4.0",
+    "dotenv": "^17.3.1",
+    "drizzle-orm": "^0.40.0",
+    "glob": "^13.0.6",
+    "lru-cache": "^11.2.6",
+    "sql.js": "^1.12.0",
+    "web-tree-sitter": "^0.26.6",
+    "yaml": "^2.8.2",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/debug": "^4.1.12",
+    "@types/eslint": "^9.6.1",
+    "@types/node": "^22.15.21",
+    "@vitest/coverage-v8": "^4.0.18",
+    "drizzle-kit": "^0.31.9",
+    "eslint": "^10.0.2",
+    "globals": "^17.4.0",
+    "prettier": "^3.8.1",
+    "tsx": "^4.19.0",
+    "typedoc": "^0.28.17",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.56.1",
+    "vitest": "^4.0.18"
+  },  
+  "keywords": [
+    "opencode",
+    "claude-code",
+    "agent",
+    "Agentic-workflow",
+    "Context-management",
+    "Agentic-toolkit",
+    "ai",
+    "llm",
+    "skills"
+  ],
+  "author": "AM Rahman",
+  "license": "Apache License 2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amrahman90/agent-p.git"
+  },
+  "bugs": {
+    "url": "https://github.com/amrahman90/agent-p/issues"
+  },
+  "homepage": "https://github.com/amrahman90/agent-p#readme",
+  "engines": {
+    "node": ">=24"
+  },
+  "packageManager": "pnpm@10.30.3",
+  "pnpm": {
+    "overrides": {
+      "better-sqlite3": "^12.6.2"
+    },
+    "onlyBuiltDependencies": [
+      "better-sqlite3",
+      "esbuild"
+    ]
+  }
+}

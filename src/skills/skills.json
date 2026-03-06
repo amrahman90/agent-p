@@ -1,0 +1,79 @@
+{
+  "version": "0.0.1",
+  "skills": [
+    {
+      "id": "typescript",
+      "name": "TypeScript Expert",
+      "description": "TypeScript and JavaScript patterns for robust services and tooling.",
+      "domains": ["frontend", "backend"],
+      "triggers": [".ts", "tsconfig", "typescript"],
+      "triggerSources": {
+        "frontmatterPath": "../../.opencode/skills/typescript-expert/SKILL.md"
+      },
+      "activation": "auto",
+      "priority": "high",
+      "contextLoad": "minimal",
+      "permissions": {
+        "allowedAgents": ["expert", "builder", "reviewer"]
+      }
+    },
+    {
+      "id": "react",
+      "name": "React UI",
+      "description": "Component architecture, state modeling, and performance tuning for React apps.",
+      "domains": ["frontend"],
+      "triggers": [".tsx", "react", "component"],
+      "activation": "auto",
+      "priority": "medium",
+      "contextLoad": "minimal",
+      "permissions": {
+        "allowedAgents": ["scout", "builder"]
+      }
+    },
+    {
+      "id": "nodejs-backend",
+      "name": "Node.js Backend",
+      "description": "Production API patterns for Node.js backends and service boundaries.",
+      "domains": ["backend", "api"],
+      "triggers": ["express", "fastify", "rest api"],
+      "triggerSources": {
+        "frontmatterPath": "../../.opencode/skills/nodejs-backend-patterns/SKILL.md"
+      },
+      "activation": "manual",
+      "priority": "medium",
+      "contextLoad": "standard",
+      "permissions": {
+        "allowedAgents": ["expert", "builder", "reviewer"]
+      }
+    },
+    {
+      "id": "jest-testing",
+      "name": "Jest Testing",
+      "description": "Jest-focused test planning and coverage hardening patterns.",
+      "domains": ["testing", "backend"],
+      "triggers": ["vitest", "jest", ".spec.ts", "test"],
+      "activation": "auto",
+      "priority": "high",
+      "contextLoad": "standard",
+      "permissions": {
+        "allowedAgents": ["tester", "reviewer", "verifier"]
+      }
+    },
+    {
+      "id": "security-review",
+      "name": "Security Review",
+      "description": "Security checks for auth, injection safety, and secrets hygiene.",
+      "domains": ["security", "backend"],
+      "triggers": ["security", "auth", "jwt", "csrf"],
+      "triggerSources": {
+        "frontmatterPath": "../../.opencode/skills/typescript-security-review/SKILL.md"
+      },
+      "activation": "auto",
+      "priority": "high",
+      "contextLoad": "standard",
+      "permissions": {
+        "allowedAgents": ["reviewer", "verifier"]
+      }
+    }
+  ]
+}

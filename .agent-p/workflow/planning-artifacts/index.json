@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "entries": [
+    {
+      "cacheKey": "{\"query\":\"implement auth\",\"workflowMode\":\"quick\",\"effectiveWorkflowMode\":\"quick\",\"analysisMode\":\"quick\",\"complexity\":{\"fileCount\":0,\"patternCount\":2},\"phaseSignature\":\"1:understand:design|2:plan:design|3:implement-red:develop|4:build-green:develop|5:verify:deliver|6:deliver:deliver\",\"skippedPhases\":[\"design\",\"refactor\",\"review\"]}",
+      "sessionId": "session-d3-flags-1",
+      "updatedAt": 1772832416602
+    },
+    {
+      "cacheKey": "{\"query\":\"implement auth\",\"workflowMode\":\"quick\",\"effectiveWorkflowMode\":\"quick\",\"analysisMode\":\"quick\",\"phaseSignature\":\"1:understand:design|2:plan:design|3:implement-red:develop|4:build-green:develop|5:verify:deliver|6:deliver:deliver\"}",
+      "sessionId": "session-d3-flags-1",
+      "updatedAt": 1772822934913
+    }
+  ]
+}
