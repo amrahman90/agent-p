@@ -81,3 +81,17 @@ Key paths:
 
 - `migrations/` is intentionally tracked in git; do not add it to `.gitignore`.
 - If this package is published to npm later, prefer a `files` allowlist in `package.json` over `.npmignore`.
+
+---
+
+## License
+
+Apache License 2.0
+
+---
+
+## Acknowledgments
+
+- [OpenCode](https://github.com/anomalyco/opencode) - The amazing AI coding agent
+- [Claude Code](https://claude.ai/code) - Anthropic's coding assistant
+
