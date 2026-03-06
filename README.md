@@ -1,6 +1,6 @@
 # agent-p
 
-Multi-Agent Orchestration & Context Engineering toolkit with a custom Agentic workflow for AI related tasks, implemented in TypeScript for Node.js.
+Multi-Agent Orchestration & Context Engineering toolkit with a custom Agentic workflow for AI related tasks, implemented in TypeScript for Claude and Opencode.
 
 > **Note:** This package is experimental and intend to use for local-offline project-based focus in future.
 
