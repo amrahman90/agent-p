@@ -15,7 +15,7 @@ Convention note: A/B suffix is used when a roadmap phase number is split into in
 
 ### Step 1 - Foundation baseline (Phase 1)
 
-- Created TypeScript runtime baseline (`package.json`, `tsconfig.json`, `src/index.ts`, `src/cli.ts`).
+- Created TypeScript runtime baseline (`package.json`, `tsconfig.json`, `src/index.ts`, `src/cli/index.ts`).
 - Added configuration schema + loader with Zod and YAML (`src/config/schema.ts`, `src/config/load-config.ts`).
 - Added DI container for service registration and resolution (`src/core/container.ts`).
 - Added initial CLI commands:
@@ -69,7 +69,7 @@ Convention note: A/B suffix is used when a roadmap phase number is split into in
 - Added deterministic scout ranking with confidence/reason output (`src/agents/scout.ts`).
 - Added builder/tester/reviewer/verifier scaffold subagents and expert handoff paths (`src/agents/builder.ts`, `src/agents/tester.ts`, `src/agents/reviewer.ts`, `src/agents/verifier.ts`, `src/agents/expert.ts`).
 - Added lifecycle metadata to handoffs (`handoffId`, optional `parentHandoffId`, `attempt`) with schema validation and deterministic ID generation.
-- Expanded CLI command surface with `agents:builder <query>`, `agents:tester <query>`, `agents:reviewer <query>`, and `agents:verifier <query>`, plus verifier trust-input flags (`src/cli.ts`).
+- Expanded CLI command surface with `agents:builder <query>`, `agents:tester <query>`, `agents:reviewer <query>`, and `agents:verifier <query>`, plus verifier trust-input flags (`src/cli/index.ts`).
 - Added deterministic multi-hop workflow integration coverage (`expert -> scout -> builder -> tester`) with parent-child linkage assertions (`test/integration/agents-workflow.integration.test.ts`).
 
 ### Step 8 - Quality runtime and safety layer (Phase 6)
@@ -77,8 +77,8 @@ Convention note: A/B suffix is used when a roadmap phase number is split into in
 - Added `executeQualityPath(...)` runtime orchestration with trust/goal gates and deterministic stage order (`src/agents/expert.ts`).
 - Added resilience controls for quality execution (stage timeout, retry budget, fail-open/fail-closed flags, circuit breaker) (`src/agents/expert.ts`, `src/agents/types.ts`).
 - Added dangerous-pattern detection utilities and integration into reviewer/verifier gate behavior (`src/agents/dangerous-patterns.ts`, `src/agents/reviewer.ts`, `src/agents/verifier.ts`).
-- Added versioned `agents:quality <query>` contract payload with `contractVersion`, policy, and `qualitySummary` (`src/cli.ts`).
-- Expanded verifier trust input model with weighted evidence and backward-compatible adapters (`src/agents/verifier.ts`, `src/cli.ts`).
+- Added versioned `agents:quality <query>` contract payload with `contractVersion`, policy, and `qualitySummary` (`src/cli/index.ts`).
+- Expanded verifier trust input model with weighted evidence and backward-compatible adapters (`src/agents/verifier.ts`, `src/cli/index.ts`).
 - Added snapshot matrix and integration coverage for all-pass, trust-skip, goal-skip, continue-on-failure, stage-disabled, and fail-open/fail-closed scenarios (`test/unit/cli.test.ts`, `test/integration/agents-workflow.integration.test.ts`, `test/unit/agents-contracts.test.ts`).
 
 ### Step 9 - Hooks runtime + platform translators (Phase 7)
@@ -86,7 +86,7 @@ Convention note: A/B suffix is used when a roadmap phase number is split into in
 - Added neutral hook contracts and deterministic runtimes for `SessionStart`, `PreToolUse`, `PostToolUse`, `Stop`, and `Notification` (`src/hooks/types.ts`, `src/hooks/*.ts`).
 - Added boundary translators for Claude and OpenCode event payloads/output envelopes (`src/hooks/translators/claude.ts`, `src/hooks/translators/opencode.ts`).
 - Added OpenCode parity event mappings for Phase 7 (`session.created`, `tool.execute.before`, `tool.execute.after`, `session.idle`, `tui.toast.show`).
-- Expanded CLI with hook command surface and `--platform neutral|claude|opencode` output targeting (`src/cli.ts`).
+- Expanded CLI with hook command surface and `--platform neutral|claude|opencode` output targeting (`src/cli/index.ts`).
 
 ### Step 10 - Hooks governance + observability + policy extensibility (Phase 8A)
 
@@ -96,7 +96,7 @@ Convention note: A/B suffix is used when a roadmap phase number is split into in
 - Added structured audit trail with redaction and rolling in-memory sink (`src/hooks/audit.ts`).
 - Added hooks config hardening for policy/audit settings and contradictory-setting validation (`src/config/schema.ts`).
 - Added backward-compatible strict-mode/profile migration behavior and aligned default config profile (`balanced`) (`src/config/load-config.ts`, `.agent-p/config.yaml`).
-- Added CLI governance utilities: `hooks:config` and `hooks:audit-log` (`src/cli.ts`).
+- Added CLI governance utilities: `hooks:config` and `hooks:audit-log` (`src/cli/index.ts`).
 - Added governance-focused unit/integration coverage and CLI snapshot contracts (`test/unit/hooks-policy.test.ts`, `test/unit/hooks-audit.test.ts`, `test/unit/cli-hooks.test.ts`, `test/integration/hooks-governance.integration.test.ts`).
 
 ### Step 11 - Skill catalog expansion track (Phase 8B, pending)
@@ -111,11 +111,11 @@ Convention note: A/B suffix is used when a roadmap phase number is split into in
 - Added evaluation engine and scoring contracts (`src/evals/engine.ts`, `src/evals/types.ts`).
 - Added self-learning pattern sink for post-tool-use outcomes (`src/evals/self-learning.ts`).
 - Wired post-tool-use runtime to optional telemetry/self-learning recorders (`src/hooks/post-tool-use.ts`).
-- Added CLI commands `stats` and `eval` for diagnostics and scoring (`src/cli.ts`).
+- Added CLI commands `stats` and `eval` for diagnostics and scoring (`src/cli/index.ts`).
 
 ## Module map (implemented)
 
-- Foundation: `src/cli.ts`, `src/index.ts`, `src/config/*`, `src/core/*`
+- Foundation: `src/cli/index.ts`, `src/index.ts`, `src/config/*`, `src/core/*`
 - DB: `src/db/database-manager.ts`, `src/db/sql-safety.ts`, `src/db/migration-runner.ts`, `src/db/migrate.ts`
 - Memory: `src/memory/*`
 - Search: `src/search/types.ts`, `src/search/sanitize.ts`, `src/search/ripgrep.ts`, `src/search/bm25.ts`, `src/search/api.ts`, `src/search/index.ts`
@@ -136,6 +136,6 @@ Convention note: A/B suffix is used when a roadmap phase number is split into in
 
 - Phase 9 testing hardening baseline is established and enforced (`vitest.e2e.config.ts`, `test/e2e/`, `test/helpers/`, `test/setup.ts`).
 - `pnpm verify:phase9` is now a full blocking gate including `pnpm test:coverage` with `@vitest/coverage-v8`.
-- Additional negative-path hardening completed for lower-branch hotspots in `src/db/sql-safety.ts`, `src/search/api.ts`, and selective CLI branches in `src/cli.ts`.
+- Additional negative-path hardening completed for lower-branch hotspots in `src/db/sql-safety.ts`, `src/search/api.ts`, and selective CLI branches in `src/cli/index.ts`.
 - Phase 10 observability baseline is now available via `stats`/`eval` commands and JSONL telemetry storage.
 - Continue extending E2E and negative-path coverage while adding agent/skill runtime telemetry integration.

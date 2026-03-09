@@ -99,7 +99,7 @@ Implement expert-driven agent orchestration with typed handoff contracts, lifecy
 
 - `src/core/bootstrap.ts`
   - registers `SearchEngine`, `MemoryManager`, `ExpertOrchestrator`, `ScoutSubagent`, `BuilderSubagent`, `TesterSubagent`, `ReviewerSubagent`, and `VerifierSubagent` as singletons
-- `src/cli.ts`
+- `src/cli/index.ts`
   - adds all subagent commands (`agents:scout`, `agents:builder`, `agents:tester`, `agents:reviewer`, `agents:verifier`, `agents:quality`)
   - supports verifier trust flags (`--test-pass-rate`, `--review-severity`, `--completeness`, `--evidence-quality`, `--coverage`, `--reproducibility`)
   - quality command supports stage toggles, gate thresholds, metadata controls, and resilience controls (`--skip-*`, `--importance`, `--stability`, `--min-*`, `--continue-on-*-failure`, `--stage-timeout-ms`, `--max-stage-retries`, `--circuit-breaker-failure-threshold`, `--rate-limit-max-executions`, `--rate-limit-window-ms`, `--continue-on-rate-limit`)

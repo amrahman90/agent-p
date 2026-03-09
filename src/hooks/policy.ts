@@ -190,6 +190,18 @@ const matchesRiskyTool = (
     (riskyTool) => riskyTool.toLowerCase() === toolName.toLowerCase(),
   );
 
+/**
+ * Policy engine for evaluating hook decisions based on tool categories, risk patterns, and configuration profiles.
+ * Supports strict, balanced, and permissive profiles with custom overrides.
+ * @example
+ * ```typescript
+ * const engine = new HookPolicyEngine({ profile: "strict" });
+ * const decision = engine.evaluatePreToolUse(payload, context);
+ * if (decision.decision === "deny") {
+ *   console.log("Tool blocked:", decision.reason);
+ * }
+ * ```
+ */
 export class HookPolicyEngine {
   private readonly config: HookPolicyConfig;
   private readonly normalizedToolOverrides: Record<

@@ -1,0 +1,13 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPoints": ["src/index.ts"],
+  "out": "docs/api",
+  "includeVersion": true,
+  "sort": ["source-order"],
+  "categorizeByGroup": true,
+  "name": "agent-p",
+  "validation": {
+    "invalidLink": true
+  },
+  "treatWarningsAsErrors": false
+}

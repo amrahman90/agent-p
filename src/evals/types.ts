@@ -1,5 +1,18 @@
 import { z } from "zod";
 
+/**
+ * Input parameters for evaluation.
+ * @example
+ * ```typescript
+ * const input: EvaluationInput = {
+ *   trustScore: 0.85,
+ *   successRate: 0.92,
+ *   activationAccuracy: 0.95,
+ *   averageLatencyMs: 150,
+ *   retryRate: 0.05
+ * };
+ * ```
+ */
 export const evaluationInputSchema = z.object({
   trustScore: z.number().min(0).max(1),
   successRate: z.number().min(0).max(1),

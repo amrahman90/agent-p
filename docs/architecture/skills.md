@@ -62,7 +62,7 @@ Provide deterministic skill discovery and manual loading through a validated man
 
 - `src/core/bootstrap.ts`
   - loads + validates manifest and registers skills services in DI container
-- `src/cli.ts`
+- `src/cli/index.ts`
   - resolves `SkillActivator` and `SkillRegistry` from container
   - exposes:
     - `skills:suggest <query>`

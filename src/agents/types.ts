@@ -343,6 +343,23 @@ export interface ScoutMemoryService {
   searchSession(term: string, sessionId: string, limit?: number): MemoryEntry[];
 }
 
+/**
+ * Validates and parses an agent handoff payload.
+ * @param payload - The unknown payload to validate
+ * @returns The validated agent handoff payload
+ * @example
+ * ```typescript
+ * const payload = validateAgentHandoffPayload({
+ *   from: "expert",
+ *   to: "scout",
+ *   sessionId: "session-123",
+ *   handoffId: "h-scout-abc123",
+ *   attempt: 1,
+ *   query: "Find files related to authentication",
+ *   metadata: { reason: "context_discovery", priority: "normal", timestamp: Date.now() }
+ * });
+ * ```
+ */
 export const validateAgentHandoffPayload = (
   payload: unknown,
 ): AgentHandoffPayload => agentHandoffPayloadSchema.parse(payload);

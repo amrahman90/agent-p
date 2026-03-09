@@ -8,11 +8,19 @@ Establish a stable TypeScript CLI baseline with validated configuration, depende
 
 ### 1) CLI entry and runtime exports
 
-- `src/cli.ts`
-  - defines `runCli()` using `commander`
+- `src/cli/index.ts`
+  - defines `createCliProgram()` using `commander`
   - bootstraps DI runtime container at process startup
-  - adds `config:check`, `db:check`, `skills:suggest`, `skills:load`, `agents:scout`, `agents:builder`, `agents:tester`, `agents:reviewer`, and `agents:verifier` commands
-  - supports verifier trust-input flags (`--test-pass-rate`, `--review-severity`, `--completeness`, `--evidence-quality`)
+  - composes modular command groups via factory functions
+  - exports `runCli()` as main entry point
+- `src/cli/commands/config.ts` - `config:check`, `db:check` commands
+- `src/cli/commands/stats.ts` - `stats`, `eval` commands
+- `src/cli/commands/debug.ts` - `debug agents|skills|memory|search|tokens|hooks` subcommands
+- `src/cli/commands/hooks.ts` - hooks management commands
+- `src/cli/commands/skills.ts` - `skills:suggest`, `skills:load` commands
+- `src/cli/commands/agents.ts` - `agents:scout`, `agents:builder`, `agents:tester`, `agents:reviewer`, `agents:verifier`, `agents:quality` commands
+- `src/cli/parsers.ts` - CLI argument parsers and validators
+- `src/cli/helpers.ts` - Shared helper functions
 - `src/index.ts`
   - central export surface for CLI, config, DB, memory, search, and skills
 
@@ -32,6 +40,7 @@ Establish a stable TypeScript CLI baseline with validated configuration, depende
   - generic token-based registration and resolution
   - supports transient and singleton providers
   - exposes shared token constants via `TOKENS`
+  - provides `resolve()` for required dependencies and `resolveOptional()` for optional dependencies
 - `src/core/bootstrap.ts`
   - composes service registrations for runtime startup
   - loads and validates skills manifest
@@ -39,7 +48,24 @@ Establish a stable TypeScript CLI baseline with validated configuration, depende
   - registers `SearchEngine`, `MemoryManager`, `ExpertOrchestrator`, `ScoutSubagent`, `BuilderSubagent`, `TesterSubagent`, `ReviewerSubagent`, and `VerifierSubagent` singletons
   - uses token bindings from `TOKENS` (`ExpertOrchestrator`, `ScoutSubagent`, `BuilderSubagent`, `TesterSubagent`, `ReviewerSubagent`, `VerifierSubagent`)
 
-### 4) Cross-platform SQLite module (Phase 1.5)
+### 4) Unified error hierarchy
+
+- `src/errors/index.ts`
+  - defines `AgentPError` base class with timestamp and cause tracking
+  - provides domain-specific error types:
+    - `ValidationError` - schema/validation failures with issues array
+    - `ConfigurationError` - config loading/validation errors
+    - `WorkflowError` - workflow execution errors with workflowId and step
+    - `MemoryError` - memory operations with operation context
+    - `SearchError` - search operations with query context
+    - `DatabaseError` - database operations with operation context
+    - `ExecutionError` - stage execution errors with stage context
+    - `SkillError` - skill loading/activation errors with skillId
+    - `NetworkError` - network operations with URL context
+    - `NotFoundError` - resource not found with resource and identifier
+  - all errors expose `ErrorCode` enum for programmatic handling
+
+### 5) Cross-platform SQLite module (Phase 1.5)
 
 - `src/db/database-manager.ts`
   - attempts `better-sqlite3` first

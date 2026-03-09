@@ -131,7 +131,7 @@ Outbound mapping returns deterministic plugin-side decision payloads (`action`, 
 
 ## CLI integration
 
-`src/cli.ts` includes scaffold command coverage for all hooks:
+`src/cli/index.ts` includes scaffold command coverage for all hooks:
 
 - `hooks:session-start <sessionId>`
 - `hooks:pre-tool-use <sessionId> <toolName>`

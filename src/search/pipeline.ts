@@ -13,6 +13,17 @@ export interface SearchStage1 {
   searchSanitized(request: SanitizedSearchRequest): Promise<SearchHit[]>;
 }
 
+/**
+ * Search Pipeline Options - Configuration for the multi-stage search pipeline
+ *
+ * @property workspaceRoot - Root directory of the workspace being searched
+ * @property stage1 - Primary search stage (typically ripgrep)
+ * @property stage2 - Optional tree-sitter based structural search
+ * @property bm25 - BM25 ranking algorithm parameters
+ * @property jaccard - Jaccard similarity reranking parameters
+ * @property maxLimit - Maximum number of results to return
+ * @property maxQueryLength - Maximum length of search query
+ */
 export interface SearchPipelineOptions {
   readonly workspaceRoot: string;
   readonly stage1: SearchStage1;
@@ -52,6 +63,29 @@ const resolveBm25Limit = (
   return Math.min(requestLimit, bm25Limit);
 };
 
+/**
+ * Executes a multi-stage search pipeline with ranking and reranking
+ *
+ * @param request - The search request containing query and options
+ * @param options - Pipeline configuration including stages and ranking options
+ * @returns Search context with hits and timing metadata
+ *
+ * @remarks
+ * The pipeline executes in 4 stages:
+ * 1. **Stage 1 (Ripgrep)**: Initial text-based search using ripgrep
+ * 2. **Stage 2 (Tree-sitter)**: Structural code analysis (optional, falls back if unavailable)
+ * 3. **Stage 3 (BM25)**: Semantic ranking using Okapi BM25 algorithm
+ * 4. **Stage 4 (Jaccard)**: Similarity-based reranking
+ *
+ * @example
+ * ```typescript
+ * const results = await runSearchPipeline(
+ *   { query: 'function.*auth', limit: 20 },
+ *   { workspaceRoot: '/project', stage1: ripgrepStage }
+ * );
+ * console.log(results.hits);
+ * ```
+ */
 export const runSearchPipeline = async (
   request: SearchRequest,
   options: SearchPipelineOptions,

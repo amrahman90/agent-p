@@ -98,6 +98,25 @@ const collectPatternCount = (query: string): number => {
   return new Set(matches.map((value) => value.toLowerCase())).size;
 };
 
+/**
+ * D3 Workflow Engine - Implements a 9-phase development workflow inspired by TDD/BDD practices
+ *
+ * @remarks
+ * The D3 (Design, Develop, Deliver) workflow engine orchestrates multi-agent software development
+ * through three stages: Design (understand, design, plan), Develop (implement-red, build-green, refactor),
+ * and Deliver (review, verify, deliver). The engine supports three workflow modes: static (full 9 phases),
+ * quick (6 phases for simple tasks), and dynamic (auto-selects based on complexity).
+ *
+ * @example
+ * ```typescript
+ * const engine = new D3WorkflowEngine({ defaultMode: 'dynamic', quickThreshold: 5 });
+ * const plan = engine.plan({ sessionId: 'sess-1', query: 'Implement user auth' });
+ * const state = engine.initialState(plan);
+ * const nextState = engine.advanceState(state, plan.phases[0].phase);
+ * ```
+ *
+ * @see {@link https://github.com/anomalyco/agent-p} for workflow documentation
+ */
 export class D3WorkflowEngine {
   private readonly config: D3WorkflowEngineConfig;
 
@@ -108,6 +127,20 @@ export class D3WorkflowEngine {
     };
   }
 
+  /**
+   * Creates a workflow execution plan based on the request parameters
+   * @param request - The workflow planning request containing session info and complexity hints
+   * @returns A complete workflow plan with phases, mode, and complexity analysis
+   *
+   * @throws {Error} If request is invalid
+   *
+   * @remarks
+   * The planning algorithm:
+   * 1. Resolves complexity from file count and query patterns
+   * 2. Determines workflow mode (static/quick) based on complexity thresholds
+   * 3. Selects appropriate phases for the workflow mode
+   * 4. Marks skipped phases for display purposes
+   */
   plan(request: D3WorkflowPlanRequest): D3WorkflowPlan {
     const complexity = this.resolveComplexity(request);
     const workflowMode = this.resolveWorkflowMode(request.workflowMode);
@@ -138,6 +171,13 @@ export class D3WorkflowEngine {
     };
   }
 
+  /**
+   * Initializes the workflow state from a plan
+   * @param plan - The workflow plan to initialize from
+   * @returns Initial workflow state with first phase ready to execute
+   *
+   * @throws {Error} If the plan has no executable phases
+   */
   initialState(plan: D3WorkflowPlan): D3WorkflowState {
     const [first, ...rest] = plan.phases.map((entry) => entry.phase);
     if (first === undefined) {
@@ -152,6 +192,14 @@ export class D3WorkflowEngine {
     };
   }
 
+  /**
+   * Advances the workflow state to the next phase
+   * @param state - Current workflow state
+   * @param targetPhase - The phase to advance to (must be the next pending phase)
+   * @returns New workflow state with updated phase information
+   *
+   * @throws {Error} If workflow is already complete or phase transition is invalid
+   */
   advanceState(
     state: D3WorkflowState,
     targetPhase: D3WorkflowPhase,

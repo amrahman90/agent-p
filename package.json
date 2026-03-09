@@ -13,14 +13,17 @@
     "build:compile": "tsc",
     "build:assets": "tsx bin/copy-skills-manifest.ts",
     "docs:check": "tsx bin/docs-verify.ts",
+    "docs:api": "typedoc",
+    "docs:generate": "pnpm docs:api",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest --coverage",
     "test:e2e": "vitest run --config vitest.e2e.config.ts",
     "test:contracts": "vitest run test/unit/cli.test.ts test/unit/cli-hooks.test.ts",
-    "verify:phase9": "pnpm typecheck && pnpm lint && pnpm test && pnpm test:contracts && pnpm test:e2e && pnpm test:coverage && pnpm build && pnpm docs:check",
+    "verify:phase9": "pnpm typecheck && pnpm typecheck:test && pnpm lint && pnpm test && pnpm test:contracts && pnpm test:e2e && pnpm test:coverage && pnpm build && pnpm docs:check",
     "lint": "eslint src/ test/",
     "typecheck": "tsc --noEmit",
+    "typecheck:test": "tsc --project tsconfig.test.json --noEmit",
     "db:migrate": "tsx src/db/migrate.ts",
     "db:generate": "drizzle-kit generate",
     "preinstall": "npx only-allow pnpm",
@@ -58,28 +61,7 @@
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.56.1",
     "vitest": "^4.0.18"
-  },  
-  "keywords": [
-    "opencode",
-    "claude-code",
-    "agent",
-    "Agentic-workflow",
-    "Context-management",
-    "Agentic-toolkit",
-    "ai",
-    "llm",
-    "skills"
-  ],
-  "author": "AM Rahman",
-  "license": "Apache License 2.0",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/amrahman90/agent-p.git"
   },
-  "bugs": {
-    "url": "https://github.com/amrahman90/agent-p/issues"
-  },
-  "homepage": "https://github.com/amrahman90/agent-p#readme",
   "engines": {
     "node": ">=24"
   },

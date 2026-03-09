@@ -2,6 +2,22 @@ import { z } from "zod";
 
 const sessionIdSchema = z.string().trim().min(1).max(128);
 
+/**
+ * Telemetry event for tool use tracking.
+ * @example
+ * ```typescript
+ * const event: TelemetryPostToolUseEvent = {
+ *   kind: "post_tool_use",
+ *   sessionId: "session-123",
+ *   timestamp: Date.now(),
+ *   toolName: "bash",
+ *   status: "executed",
+ *   decision: "allow",
+ *   latencyMs: 150,
+ *   platform: "opencode"
+ * };
+ * ```
+ */
 export const telemetryPostToolUseEventSchema = z.object({
   kind: z.literal("post_tool_use"),
   sessionId: sessionIdSchema,

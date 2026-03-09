@@ -4,11 +4,12 @@ import { resolve } from "node:path";
 import { ZodError } from "zod";
 import { parse as parseYaml } from "yaml";
 
+import { ConfigurationError } from "../errors/index.js";
 import { agentPConfigSchema, type AgentPConfig } from "./schema.js";
 
 export const DEFAULT_CONFIG_PATH = ".agent-p/config.yaml";
 
-export class ConfigValidationError extends Error {
+export class ConfigValidationError extends ConfigurationError {
   readonly issues: ZodError["issues"];
 
   constructor(error: ZodError) {

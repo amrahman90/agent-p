@@ -6,6 +6,17 @@ All notable changes to this project are documented in this file.
 
 ### Added
 
+- TypeDoc configuration (`typedoc.json`) for API documentation generation.
+- `docs:api` script for generating API documentation via TypeDoc.
+- `docs/guides/documentation.md` guide explaining documentation generation and JSDoc standards.
+- JSDoc documentation with @example tags on priority modules (`agents/types.ts`, `agents/expert.ts`, `hooks/types.ts`, `hooks/policy.ts`, `telemetry/types.ts`, `evals/types.ts`, `workflow/executor.ts`).
+- JSDoc documentation comments on core modules (`engine.ts`, `container.ts`, `pipeline.ts`, `memory/manager.ts`).
+- Unified error hierarchy (`src/errors/index.ts`) with `AgentPError` base class and 10 domain-specific error types (`ValidationError`, `ConfigurationError`, `WorkflowError`, `MemoryError`, `SearchError`, `DatabaseError`, `ExecutionError`, `SkillError`, `NetworkError`, `NotFoundError`).
+- Modular CLI structure in `src/cli/` with separate command modules (`commands/config.ts`, `commands/stats.ts`, `commands/debug.ts`, `commands/hooks.ts`, `commands/skills.ts`, `commands/agents.ts`), parsers, and helpers.
+- Container `resolveOptional()` method for optional dependency resolution without try/catch workarounds.
+- Path-security unit tests (`test/unit/path-security.test.ts`) with 17 test cases covering path traversal, command injection, and symlink attack prevention.
+- Circuit breaker unit tests (`test/unit/agents-expert-circuit-breaker.test.ts`) with 6 test cases covering failure threshold, half-open, and recovery states.
+
 - `agents:quality` metadata options `--importance` and `--stability` with deterministic 1..5 handling and policy forwarding.
 - Quality contract propagation for importance/stability across gate state and quality summary while preserving `contractVersion: "1.1.0"`.
 - New `hooks:session-start <sessionId>` CLI scaffold command for Phase 7 SessionStart hook execution.
@@ -69,3 +80,7 @@ All notable changes to this project are documented in this file.
 - Scout memory integration now uses session-scoped retrieval (`searchSession`) instead of cross-scope scans, preventing leakage from private/user/shared scopes into scout ranking context.
 - Memory and agents architecture docs updated to document scoped scout retrieval and memory isolation guarantees.
 - Skills docs now define `triggerSources` path semantics (manifest-relative), deterministic trigger precedence, and loader/activation sanitization behavior.
+- CLI entry point split from monolithic `src/cli.ts` into modular `src/cli/` structure with separate command modules, parsers, and helpers.
+- Documentation updated to reflect modular CLI structure across all architecture docs (`foundation.md`, `overview.md`, `agents.md`, `hooks.md`, `skills.md`, `workflow.md`).
+- Container interface now includes `resolveOptional()` method for cleaner optional dependency handling.
+- Lint error fixes: removed empty interfaces in CLI debug commands and unused TelemetrySearchRunEvent import in CLI helpers.

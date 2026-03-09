@@ -2,6 +2,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { dirname, isAbsolute, join } from "node:path";
 import { parse as parseYaml } from "yaml";
 
+import { ValidationError } from "../errors/index.js";
 import { type SkillManifest, skillManifestSchema } from "./schema.js";
 import { validateSkillManifest } from "./validator.js";
 
@@ -64,9 +65,9 @@ interface RawSkillRecord {
   triggerSources?: unknown;
 }
 
-export class SkillManifestValidationError extends Error {
-  constructor(message: string) {
-    super(message);
+export class SkillManifestValidationError extends ValidationError {
+  constructor(message: string, issues?: readonly unknown[], cause?: Error) {
+    super(message, issues, cause);
     this.name = "SkillManifestValidationError";
   }
 }

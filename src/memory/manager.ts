@@ -264,6 +264,32 @@ export interface MemoryManagerOptions {
   readonly now?: () => number;
 }
 
+/**
+ * Memory Manager - Tiered memory storage system with hot/warm/cold architecture
+ *
+ * @remarks
+ * Provides a multi-tier memory system for storing and retrieving context across agent sessions.
+ * - **Hot tier**: In-memory LRU cache with TTL for immediate access
+ * - **Warm tier**: SQLite-backed storage for persistent but faster access
+ * - **Cold tier**: JSONL archive for long-term storage
+ *
+ * @example
+ * ```typescript
+ * const memory = new MemoryManager({
+ *   appId: 'my-app',
+ *   sessionId: 'session-123',
+ *   hot: { maxEntries: 1000, ttlMs: 60000 },
+ *   warm: { store: warmStore },
+ *   cold: { archivePath: './archives' }
+ * });
+ *
+ * // Store in session scope
+ * memory.session.set('user-pref', { theme: 'dark' });
+ *
+ * // Search across all scopes
+ * const results = memory.searchAll('user', 10);
+ * ```
+ */
 export class MemoryManager {
   readonly session: SessionScope;
   readonly user: UserScope;

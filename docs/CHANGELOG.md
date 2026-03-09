@@ -2,6 +2,27 @@
 
 ## 0.0.2
 
+### Added
+
+- TypeDoc configuration (`typedoc.json`) for API documentation generation.
+- `docs:api` script for generating API documentation via TypeDoc.
+- `docs/guides/documentation.md` guide explaining documentation generation and JSDoc standards.
+- JSDoc documentation with @example tags on priority modules.
+- Unified error hierarchy with `AgentPError` base class and 10 domain-specific error types.
+- Modular CLI structure in `src/cli/` with separate command modules.
+- Container `resolveOptional()` method for optional dependency resolution.
+- Path-security unit tests (17 test cases).
+- Circuit breaker unit tests (6 test cases).
+
+### Changed
+
+- CLI entry point split from monolithic `src/cli.ts` into modular `src/cli/` structure.
+- Documentation updated to reflect modular CLI structure across all architecture docs.
+- Container interface now includes `resolveOptional()` method.
+- Lint error fixes: removed empty interfaces and unused imports.
+
+### Fixed
+
 - Hardened runtime boundaries by validating D3 workflow checkpoints, context analysis, and phase/artifact compatibility with strict Zod schemas.
 - Removed scout cross-scope memory scans by switching to session-scoped lookup contracts (`searchSession`) to preserve memory isolation.
 - Updated memory and agents architecture docs to reflect scoped scout retrieval and isolation expectations.

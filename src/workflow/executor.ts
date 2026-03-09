@@ -190,6 +190,20 @@ const checkpointStatusFor = (
   return "in_progress";
 };
 
+/**
+ * Executes D3 workflow plans with checkpoint/resume support, caching, and reindexing capabilities.
+ * Manages phase execution, context propagation, and resilience patterns.
+ * @example
+ * ```typescript
+ * const executor = new D3WorkflowExecutor(expertOrchestrator, subagents, Date.now, checkpointStore);
+ * const result = await executor.execute({
+ *   plan: workflowPlan,
+ *   sessionId: "session-123",
+ *   continueOnFailure: false,
+ *   useCache: true
+ * });
+ * ```
+ */
 export class D3WorkflowExecutor {
   constructor(
     private readonly expert: ExpertOrchestrator,

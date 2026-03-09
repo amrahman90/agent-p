@@ -17,6 +17,7 @@ import type {
 } from "./types.js";
 import { validateAgentHandoffPayload } from "./types.js";
 import { detectDangerousPatterns } from "./dangerous-patterns.js";
+import { ExecutionError } from "../errors/index.js";
 
 type Clock = () => number;
 
@@ -111,9 +112,9 @@ const GOAL_GATE_REASON_CODE = "goal_completion_below_threshold" as const;
 const CIRCUIT_OPEN_REASON_CODE = "resilience_circuit_open" as const;
 const RATE_LIMIT_REASON_CODE = "resilience_rate_limited" as const;
 
-class StageTimeoutError extends Error {
+class StageTimeoutError extends ExecutionError {
   constructor(stage: AgentRole, timeoutMs: number) {
-    super(`Stage '${stage}' exceeded timeout ${timeoutMs}ms`);
+    super(`Stage '${stage}' exceeded timeout ${timeoutMs}ms`, stage);
     this.name = "StageTimeoutError";
   }
 }
@@ -293,6 +294,18 @@ const dedupeDangerousPatterns = (
   return deduped;
 };
 
+/**
+ * Orchestrates expert quality workflows including scout, builder, tester, reviewer, and verifier agents.
+ * Handles handoff creation, quality path composition, and execution with resilience patterns.
+ * @example
+ * ```typescript
+ * const orchestrator = new ExpertOrchestrator();
+ * const handoffs = orchestrator.composeQualityPath({
+ *   sessionId: "session-123",
+ *   query: "Implement user authentication"
+ * }, { includeTester: true, includeReviewer: true, includeVerifier: true });
+ * ```
+ */
 export class ExpertOrchestrator {
   constructor(private readonly clock: Clock = Date.now) {}
 

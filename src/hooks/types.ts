@@ -30,6 +30,13 @@ const jsonObjectSchema = z.record(z.string(), z.unknown());
 
 const querySchema = z.string().trim().min(1).max(MAX_QUERY_LENGTH);
 
+/**
+ * Available hook names in the system.
+ * @example
+ * ```typescript
+ * const hookName: HookName = "pre_tool_use";
+ * ```
+ */
 export const hookNameSchema = z.enum([
   "session_start",
   "pre_tool_use",

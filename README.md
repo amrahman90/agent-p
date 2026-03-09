@@ -1,6 +1,6 @@
 # agent-p
 
-Multi-Agent Orchestration & Context Engineering toolkit with a custom Agentic workflow for AI related tasks, implemented in TypeScript for Claude and Opencode.
+Multi-Agent Orchestration & Context Engineering toolkit with a custom Agentic workflow for AI related tasks, implemented in TypeScript for Node.js.
 
 > **Note:** This package is experimental and intend to use for local-offline project-based focus in future.
 
@@ -57,6 +57,7 @@ Primary scripts:
 - `pnpm test:e2e` - E2E lane (`vitest.e2e.config.ts`)
 - `pnpm test:coverage` - coverage run
 - `pnpm docs:check` - documentation consistency checks
+- `pnpm docs:api` - generate API documentation via TypeDoc
 - `pnpm build` - lint + docs check + compile + asset copy
 - `pnpm verify:phase9` - full hard gate sequence
 
@@ -76,22 +77,7 @@ Key paths:
 - `migrations/` - database migrations (committed as source-of-truth)
 - `.agent-p/` - local runtime state and telemetry artifacts
 
-
 ## Notes
 
 - `migrations/` is intentionally tracked in git; do not add it to `.gitignore`.
 - If this package is published to npm later, prefer a `files` allowlist in `package.json` over `.npmignore`.
-
----
-
-## License
-
-Apache License 2.0
-
----
-
-## Acknowledgments
-
-- [OpenCode](https://github.com/anomalyco/opencode) - The amazing AI coding agent
-- [Claude Code](https://claude.ai/code) - Anthropic's coding assistant
-

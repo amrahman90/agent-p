@@ -65,8 +65,10 @@ test/
 - Recent branch-hardening focus areas now include:
   - `src/db/sql-safety.ts` negative-path guards (empty SQL, null bytes, placeholder binding invariants, template misuse)
   - `src/search/api.ts` constructor/sanitization option forwarding when default stage wiring is used
-  - selective CLI skill/runtime branches in `src/cli.ts` (`skills:suggest`, `skills:load`, and `runCli` bootstrap path)
+  - selective CLI skill/runtime branches in `src/cli/index.ts` (`skills:suggest`, `skills:load`, and `runCli` bootstrap path)
   - observability baseline contracts in `src/telemetry/*`, `src/evals/*`, and `src/hooks/post-tool-use.ts` recorder forwarding
+  - path-security validation in `test/unit/path-security.test.ts` (17 tests for path traversal, injection, and symlink attacks)
+  - circuit breaker resilience in `test/unit/agents-expert-circuit-breaker.test.ts` (6 tests for failure threshold, half-open, and recovery states)
 
 ## Focused hardening command set
 
@@ -76,6 +78,16 @@ pnpm exec vitest run test/unit/sql-safety.test.ts test/unit/search-api-construct
 
 - Use the focused command above for quick regression checks while iterating on SQL safety/search API/CLI wiring.
 - Always finish with `pnpm verify:phase9` to preserve full-gate parity.
+
+## Security and resilience test sets
+
+```bash
+pnpm exec vitest run test/unit/path-security.test.ts
+pnpm exec vitest run test/unit/agents-expert-circuit-breaker.test.ts
+```
+
+- `test/unit/path-security.test.ts` - 17 tests covering path traversal, command injection, and symlink attack prevention
+- `test/unit/agents-expert-circuit-breaker.test.ts` - 6 tests covering circuit breaker states (closed, half-open, open), failure threshold, and recovery behavior
 
 ## Phase 10 focused observability checks
 

@@ -3,6 +3,7 @@
 ## Configuration Options
 
 ### Basic Configuration
+
 ```json
 {
   "entryPoints": ["src/index.ts"],
@@ -14,9 +15,10 @@
 ```
 
 ### Advanced Configuration
+
 ```json
 {
-  "entryPoints": ["src/index.ts", "src/cli.ts"],
+  "entryPoints": ["src/index.ts", "src/cli/index.ts"],
   "entryPointStrategy": "resolve",
   "out": "docs/api",
   "theme": "markdown",
@@ -100,6 +102,7 @@
 ## Theme Options
 
 ### Default Theme
+
 ```json
 {
   "theme": "default",
@@ -109,6 +112,7 @@
 ```
 
 ### Markdown Theme
+
 ```json
 {
   "theme": "markdown",
@@ -122,6 +126,7 @@
 ```
 
 ### Minimal Theme
+
 ```json
 {
   "theme": "minimal",
@@ -135,6 +140,7 @@
 ## Comment Tags
 
 ### Basic Tags
+
 ```typescript
 /**
  * @module MyModule
@@ -153,6 +159,7 @@
 ```
 
 ### Documentation Tags
+
 ```typescript
 /**
  * @param name - Parameter description
@@ -174,6 +181,7 @@
 ```
 
 ### Type-Specific Tags
+
 ```typescript
 /**
  * @augments ParentClass
@@ -198,6 +206,7 @@
 ```
 
 ### Advanced Tags
+
 ```typescript
 /**
  * @typeParam T - Generic type parameter
@@ -237,79 +246,85 @@
 ## Integration with Build Tools
 
 ### Webpack Plugin
+
 ```javascript
 // webpack.config.js
-const TypeDocWebpackPlugin = require('typedoc-webpack-plugin');
+const TypeDocWebpackPlugin = require("typedoc-webpack-plugin");
 
 module.exports = {
   plugins: [
     new TypeDocWebpackPlugin({
-      name: 'My Project',
-      mode: 'file',
-      out: './docs',
-      theme: 'default',
+      name: "My Project",
+      mode: "file",
+      out: "./docs",
+      theme: "default",
       includeDeclarations: false,
       ignoreCompilerErrors: true,
-      version: true
-    })
-  ]
+      version: true,
+    }),
+  ],
 };
 ```
 
 ### Rollup Plugin
+
 ```javascript
 // rollup.config.js
-import typedoc from 'rollup-plugin-typedoc';
+import typedoc from "rollup-plugin-typedoc";
 
 export default {
   plugins: [
     typedoc({
-      out: './docs',
-      exclude: '**/*.{test,spec}.ts',
-      theme: 'markdown',
-      readme: 'API.md'
-    })
-  ]
+      out: "./docs",
+      exclude: "**/*.{test,spec}.ts",
+      theme: "markdown",
+      readme: "API.md",
+    }),
+  ],
 };
 ```
 
 ### Vite Plugin
+
 ```javascript
 // vite.config.js
-import typedoc from 'vite-plugin-typedoc';
+import typedoc from "vite-plugin-typedoc";
 
 export default {
   plugins: [
     typedoc({
-      entryPoints: ['src/index.ts'],
-      out: 'docs/api',
-      theme: 'default'
-    })
-  ]
+      entryPoints: ["src/index.ts"],
+      out: "docs/api",
+      theme: "default",
+    }),
+  ],
 };
 ```
 
 ## TypeDoc Plugins
 
 ### Plugin Development
+
 ```typescript
 // typedoc-plugin-example.ts
-import { Application, Converter, Context, Reflection } from 'typedoc';
+import { Application, Converter, Context, Reflection } from "typedoc";
 
 export function load(app: Application) {
-  app.converter.on(Converter.EVENT_CREATE_SIGNATURE,
+  app.converter.on(
+    Converter.EVENT_CREATE_SIGNATURE,
     (context: Context, reflection: Reflection, node?) => {
       // Plugin logic
       if (reflection.kind === ReflectionKind.Method) {
         reflection.comment = reflection.comment || new Comment();
-        reflection.comment.tags.push(new Tag('@custom', 'Custom tag'));
+        reflection.comment.tags.push(new Tag("@custom", "Custom tag"));
       }
-    }
+    },
   );
 }
 ```
 
 ### Popular Plugins
+
 - `typedoc-plugin-markdown` - Markdown output
 - `typedoc-plugin-external-module-name` - Module naming
 - `typedoc-plugin-sourcefile-url` - Source links
@@ -324,18 +339,20 @@ export function load(app: Application) {
 ## Best Practices
 
 ### 1. Entry Point Strategy
+
 ```typescript
 // Use barrel exports in index.ts
-export * from './user';
-export * from './auth';
-export * from './utils';
+export * from "./user";
+export * from "./auth";
+export * from "./utils";
 
 // Re-export types for better documentation
-export type { User, CreateUserDto } from './user/types';
+export type { User, CreateUserDto } from "./user/types";
 ```
 
 ### 2. Module Documentation
-```typescript
+
+````typescript
 /**
  * @packageDocumentation
  *
@@ -353,11 +370,12 @@ export type { User, CreateUserDto } from './user/types';
  * ```
  */
 
-export { AuthService } from './auth.service';
-export { JwtStrategy } from './jwt.strategy';
-```
+export { AuthService } from "./auth.service";
+export { JwtStrategy } from "./jwt.strategy";
+````
 
 ### 3. Type Documentation
+
 ```typescript
 /**
  * Represents a user in the system
@@ -379,6 +397,7 @@ export interface User {
 ```
 
 ### 4. Linking
+
 ```typescript
 /**
  * @see {@link UserService} for user operations
@@ -396,6 +415,7 @@ export interface User {
 ### Common Issues
 
 1. **Missing exports**
+
 ```json
 {
   "entryPoints": ["src/index.ts"],
@@ -404,6 +424,7 @@ export interface User {
 ```
 
 2. **TypeScript errors**
+
 ```json
 {
   "ignoreCompilerErrors": true,
@@ -412,6 +433,7 @@ export interface User {
 ```
 
 3. **Slow generation**
+
 ```json
 {
   "exclude": ["**/*.test.ts", "**/*.spec.ts", "node_modules"],
@@ -420,6 +442,7 @@ export interface User {
 ```
 
 4. **Large output**
+
 ```json
 {
   "excludePrivate": true,
@@ -429,6 +452,7 @@ export interface User {
 ```
 
 ### Performance Optimization
+
 ```json
 {
   "cleanOutputDir": false,
@@ -441,6 +465,7 @@ export interface User {
 ## CI/CD Integration
 
 ### GitHub Actions
+
 ```yaml
 name: Generate Documentation
 
@@ -448,9 +473,9 @@ on:
   push:
     branches: [main]
     paths:
-      - 'src/**'
-      - 'package.json'
-      - 'tsconfig.json'
+      - "src/**"
+      - "package.json"
+      - "tsconfig.json"
 
 jobs:
   docs:
@@ -461,7 +486,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: "18"
 
       - name: Install dependencies
         run: npm ci
@@ -478,6 +503,7 @@ jobs:
 ```
 
 ### GitLab CI
+
 ```yaml
 generate_docs:
   stage: documentation
@@ -496,36 +522,40 @@ generate_docs:
 ## Validation and Testing
 
 ### Documentation Coverage
+
 ```typescript
 // scripts/check-doc-coverage.ts
-import { Application } from 'typedoc';
+import { Application } from "typedoc";
 
 async function checkCoverage() {
   const app = new Application();
 
   app.bootstrap({
-    entryPoints: ['src/index.ts'],
-    tsconfig: 'tsconfig.json'
+    entryPoints: ["src/index.ts"],
+    tsconfig: "tsconfig.json",
   });
 
   const project = app.convert();
 
   if (!project) {
-    throw new Error('Failed to convert project');
+    throw new Error("Failed to convert project");
   }
 
   const reflections = project.getReflections();
   const undocumented = reflections.filter(
-    r => !r.comment && r.kindOf(ReflectionKind.All)
+    (r) => !r.comment && r.kindOf(ReflectionKind.All),
   );
 
-  console.log(`Documentation coverage: ${
-    ((reflections.length - undocumented.length) / reflections.length * 100).toFixed(2)
-  }%`);
+  console.log(
+    `Documentation coverage: ${(
+      ((reflections.length - undocumented.length) / reflections.length) *
+      100
+    ).toFixed(2)}%`,
+  );
 
   if (undocumented.length > 0) {
-    console.log('Undocumented items:');
-    undocumented.forEach(item => {
+    console.log("Undocumented items:");
+    undocumented.forEach((item) => {
       console.log(`- ${item.name} (${ReflectionKind[item.kind]})`);
     });
   }
@@ -535,20 +565,21 @@ checkCoverage();
 ```
 
 ### Documentation Testing
+
 ```typescript
 // tests/documentation.test.ts
-describe('Documentation', () => {
-  it('should have JSDoc for all public methods', () => {
-    const publicMethods = getPublicMethods('./src');
-    const documentedMethods = getDocumentedMethods('./src');
+describe("Documentation", () => {
+  it("should have JSDoc for all public methods", () => {
+    const publicMethods = getPublicMethods("./src");
+    const documentedMethods = getDocumentedMethods("./src");
 
-    publicMethods.forEach(method => {
+    publicMethods.forEach((method) => {
       expect(documentedMethods).toContain(method);
     });
   });
 
-  it('should have valid TypeDoc comments', async () => {
-    const result = await validateTypeDoc('./src');
+  it("should have valid TypeDoc comments", async () => {
+    const result = await validateTypeDoc("./src");
     expect(result.errors).toHaveLength(0);
   });
 });
@@ -557,6 +588,7 @@ describe('Documentation', () => {
 ## Migration Guide
 
 ### From JSDoc to TypeDoc
+
 1. Install TypeDoc: `npm install --save-dev typedoc`
 2. Create configuration file
 3. Update comment syntax if needed
@@ -565,6 +597,7 @@ describe('Documentation', () => {
 6. Fix any warnings or errors
 
 ### From Compodoc (Angular)
+
 ```bash
 # Install TypeDoc
 npm install --save-dev typedoc
@@ -574,6 +607,7 @@ npm install --save-dev typedoc
 ```
 
 ### From Documentation.js
+
 ```bash
 # Install TypeDoc
 npm install --save-dev typedoc
@@ -586,9 +620,10 @@ npm install --save-dev typedoc
 ## Advanced Features
 
 ### Custom Themes
+
 ```typescript
 // custom-theme.ts
-import { DefaultTheme } from 'typedoc';
+import { DefaultTheme } from "typedoc";
 
 export class CustomTheme extends DefaultTheme {
   constructor(renderer: Renderer) {
@@ -604,9 +639,10 @@ export class CustomTheme extends DefaultTheme {
 ```
 
 ### Custom Renderers
+
 ```typescript
 // custom-renderer.ts
-import { Renderer } from 'typedoc';
+import { Renderer } from "typedoc";
 
 export class CustomRenderer extends Renderer {
   constructor() {
@@ -617,28 +653,30 @@ export class CustomRenderer extends Renderer {
 ```
 
 ### Event Handling
+
 ```typescript
 // typedoc-events.ts
-import { Application } from 'typedoc';
+import { Application } from "typedoc";
 
 const app = new Application();
 
 app.converter.on(Converter.EVENT_BEGIN, () => {
-  console.log('Conversion started');
+  console.log("Conversion started");
 });
 
 app.converter.on(Converter.EVENT_END, () => {
-  console.log('Conversion completed');
+  console.log("Conversion completed");
 });
 
 app.renderer.on(Renderer.EVENT_BEGIN, () => {
-  console.log('Rendering started');
+  console.log("Rendering started");
 });
 ```
 
 ## Output Examples
 
 ### Module Documentation
+
 ```markdown
 # Module: user/UserService
 
@@ -663,6 +701,7 @@ app.renderer.on(Renderer.EVENT_BEGIN, () => {
 ```
 
 ### Class Documentation
+
 ```markdown
 # Class: UserService
 
@@ -688,8 +727,8 @@ Creates a new instance of UserService
 
 #### Parameters:
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name     | Type                                                       | Description           |
+| :------- | :--------------------------------------------------------- | :-------------------- |
 | `config` | [UserServiceConfig](user_UserService.UserServiceConfig.md) | Service configuration |
 
 ## Methods
@@ -702,8 +741,8 @@ Creates a new user
 
 #### Parameters:
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name   | Type                                               | Description        |
+| :----- | :------------------------------------------------- | :----------------- |
 | `data` | [CreateUserDto](user_UserService.CreateUserDto.md) | User creation data |
 
 #### Returns:

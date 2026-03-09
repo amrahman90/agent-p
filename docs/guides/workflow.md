@@ -7,7 +7,7 @@ Provide an operator-focused guide for running the D3 workflow planner, executor,
 ## Core command
 
 ```bash
-pnpm exec tsx src/cli.ts agents:workflow "your task"
+pnpm exec tsx src/cli/index.ts agents:workflow "your task"
 ```
 
 ## Planning vs execution
@@ -19,10 +19,10 @@ pnpm exec tsx src/cli.ts agents:workflow "your task"
 ## Common flags
 
 ```bash
-pnpm exec tsx src/cli.ts agents:workflow "task" --execute
-pnpm exec tsx src/cli.ts agents:workflow --resume --session <session-id>
-pnpm exec tsx src/cli.ts agents:workflow "task" --execute --no-cache
-pnpm exec tsx src/cli.ts agents:workflow "task" --execute --reindex
+pnpm exec tsx src/cli/index.ts agents:workflow "task" --execute
+pnpm exec tsx src/cli/index.ts agents:workflow --resume --session <session-id>
+pnpm exec tsx src/cli/index.ts agents:workflow "task" --execute --no-cache
+pnpm exec tsx src/cli/index.ts agents:workflow "task" --execute --reindex
 ```
 
 ## Runtime expectations

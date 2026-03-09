@@ -46,3 +46,8 @@ pnpm verify:phase9
 - Keep architecture docs aligned with runtime behavior.
 - Add or update guide docs for operational workflows.
 - Record notable user-facing or contract-impacting updates in `docs/CHANGELOG.md`.
+- Generate API documentation when adding new public APIs:
+  ```bash
+  pnpm docs:api
+  ```
+- See `docs/guides/documentation.md` for documentation standards.
