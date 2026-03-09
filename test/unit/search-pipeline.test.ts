@@ -1,4 +1,4 @@
-import { mkdirSync, mkdtempSync } from "node:fs";
+import { mkdirSync, mkdtempSync, realpathSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
@@ -53,13 +53,13 @@ describe("runSearchPipeline", () => {
     expect(searchSanitized).toHaveBeenCalledWith(
       expect.objectContaining({
         query: "auth token",
-        resolvedRoot: resolve(srcDir),
+        resolvedRoot: realpathSync(srcDir),
         limit: 5,
       }),
     );
 
     expect(context.sanitized.query).toBe("auth token");
-    expect(context.sanitized.resolvedRoot).toBe(resolve(srcDir));
+    expect(context.sanitized.resolvedRoot).toBe(realpathSync(srcDir));
     expect(context.candidates).toHaveLength(2);
     expect(context.hits).toHaveLength(2);
     expect(context.hits[0]?.filePath).toBe("src/auth.ts");

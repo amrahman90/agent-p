@@ -68,7 +68,8 @@
   "packageManager": "pnpm@10.30.3",
   "pnpm": {
     "overrides": {
-      "better-sqlite3": "^12.6.2"
+      "better-sqlite3": "^12.6.2",
+      "esbuild": "^0.25.0"
     },
     "onlyBuiltDependencies": [
       "better-sqlite3",

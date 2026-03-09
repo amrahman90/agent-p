@@ -1,4 +1,4 @@
-import { mkdirSync, mkdtempSync } from "node:fs";
+import { mkdirSync, mkdtempSync, realpathSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
@@ -53,14 +53,14 @@ describe("SearchEngine orchestration", () => {
     expect(stage.searchSanitized).toHaveBeenCalledWith(
       expect.objectContaining({
         query: "auth token",
-        resolvedRoot: resolve(srcDir),
+        resolvedRoot: realpathSync(srcDir),
         limit: 5,
         mode: "literal",
       }),
     );
 
     expect(response.query).toBe("auth token");
-    expect(response.root).toBe(resolve(srcDir));
+    expect(response.root).toBe(realpathSync(srcDir));
     expect(response.limit).toBe(5);
     expect(response.totalCandidates).toBe(2);
     expect(response.hits).toHaveLength(2);

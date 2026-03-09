@@ -1,4 +1,4 @@
-import { mkdirSync, mkdtempSync } from "node:fs";
+import { mkdirSync, mkdtempSync, realpathSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
@@ -33,7 +33,7 @@ describe("search sanitization", () => {
     const srcDir = join(workspaceRoot, "src");
     mkdirSync(srcDir, { recursive: true });
 
-    expect(resolveSearchRoot(workspaceRoot, "src")).toBe(resolve(srcDir));
+    expect(resolveSearchRoot(workspaceRoot, "src")).toBe(realpathSync(srcDir));
     expect(() => resolveSearchRoot(workspaceRoot, "../")).toThrow(
       "search root must stay within workspace root",
     );
