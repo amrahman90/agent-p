@@ -1,6 +1,6 @@
 # agent-p
 
-Multi-Agent Orchestration & Context Engineering toolkit with a custom Agentic workflow for AI related tasks, implemented in TypeScript for Node.js.
+Multi-Agent Orchestration & Context Engineering toolkit with a custom Agentic workflow for AI related tasks, implemented in TypeScript for Claude and Opencode.
 
 > **Note:** This package is experimental and intend to use for local-offline project-based focus in future.
 
@@ -81,3 +81,16 @@ Key paths:
 
 - `migrations/` is intentionally tracked in git; do not add it to `.gitignore`.
 - If this package is published to npm later, prefer a `files` allowlist in `package.json` over `.npmignore`.
+
+---
+
+## License
+
+Apache License 2.0
+
+---
+
+## Acknowledgments
+
+- [OpenCode](https://github.com/anomalyco/opencode) - The amazing AI coding agent
+- [Claude Code](https://claude.ai/code) - Anthropic's coding assistant
